@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Parallable Sum</title>
+</head>
+<body>
+<input style="margin-left:16px" type="button" value="Sum" onclick="sumArray()" /><input style="margin-left:16px" type="button" value="Sum with Web Worker (BETA)" onclick="sumArrayAsync()" />
+<div style="margin-top:20px">One single run will take 10 seconds or so, please be patient</div>
+<div id="elapsed_time" style="margin-top:20px"></div>
+<div style="margin-top:20px" id="output"></div>
+<script type="text/javascript" src="sum.js"></script>
+<script type="text/javascript">
+var some = [];
+for (var i = 0; i < 98573; i++)
+	some[i] = i;
+
+function sumArray() {
+	var elapsed_time = (new Date()).getTime();
+	document.getElementById("output").innerHTML = sum(some);
+	document.getElementById("elapsed_time").innerHTML = ((new Date()).getTime() - elapsed_time) + "ms";
+}
+
+function sumArrayAsync() {
+	var elapsed_time = (new Date()).getTime();
+	sum(some, true, 8)(function (result) {
+		document.getElementById("output").innerHTML = result;
+		document.getElementById("elapsed_time").innerHTML = ((new Date()).getTime() - elapsed_time) + "ms";
+	});
+}
+</script>
+</body>
+</html>
